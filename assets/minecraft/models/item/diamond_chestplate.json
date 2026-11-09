@@ -1,0 +1,36 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "items/diamond_chestplate"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.01,
+        "damaged": false
+      },
+      "model": "nexora:item/armor_divina"
+    },
+    {
+      "predicate": {
+        "damage": 0.02,
+        "damaged": false
+      },
+      "model": "nexora:item/armor_infernal"
+    },
+    {
+      "predicate": {
+        "damage": 0.03,
+        "damaged": false
+      },
+      "model": "nexora:item/armor_glacial"
+    },
+    {
+      "predicate": {
+        "damage": 0.04,
+        "damaged": false
+      },
+      "model": "nexora:item/armor_vacio"
+    }
+  ]
+}
