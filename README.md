@@ -1,0 +1,2 @@
+# NEXORA-RESOURCE-PACK
+NEXORA STUDIOS | Custom RPG Resource Pack
