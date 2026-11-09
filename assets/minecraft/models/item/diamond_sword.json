@@ -1,0 +1,64 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "items/diamond_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.01,
+        "damaged": false
+      },
+      "model": "nexora:item/spear_divina"
+    },
+    {
+      "predicate": {
+        "damage": 0.02,
+        "damaged": false
+      },
+      "model": "nexora:item/spear_glacial"
+    },
+    {
+      "predicate": {
+        "damage": 0.03,
+        "damaged": false
+      },
+      "model": "nexora:item/spear_infernal"
+    },
+    {
+      "predicate": {
+        "damage": 0.04,
+        "damaged": false
+      },
+      "model": "nexora:item/spear_natural"
+    },
+    {
+      "predicate": {
+        "damage": 0.05,
+        "damaged": false
+      },
+      "model": "nexora:item/spear_trueno"
+    },
+    {
+      "predicate": {
+        "damage": 0.06,
+        "damaged": false
+      },
+      "model": "nexora:item/spear_vacio"
+    },
+    {
+      "predicate": {
+        "damage": 0.07,
+        "damaged": false
+      },
+      "model": "nexora:item/spear_marina"
+    },
+    {
+      "predicate": {
+        "damage": 0.08,
+        "damaged": false
+      },
+      "model": "nexora:item/spear_ancestral"
+    }
+  ]
+}
