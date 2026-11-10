@@ -1,0 +1,32 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minecraft:items/diamond_leggings"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.01
+      },
+      "model": "nexora:item/armor_divina_leggings"
+    },
+    {
+      "predicate": {
+        "damage": 0.02
+      },
+      "model": "nexora:item/armor_infernal_leggings"
+    },
+    {
+      "predicate": {
+        "damage": 0.03
+      },
+      "model": "nexora:item/armor_glacial_leggings"
+    },
+    {
+      "predicate": {
+        "damage": 0.04
+      },
+      "model": "nexora:item/armor_vacio_leggings"
+    }
+  ]
+}

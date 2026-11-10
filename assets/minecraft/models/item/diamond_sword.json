@@ -1,0 +1,206 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "minecraft:items/diamond_sword"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.01
+      },
+      "model": "nexora:item/spear_divina"
+    },
+    {
+      "predicate": {
+        "damage": 0.02
+      },
+      "model": "nexora:item/spear_glacial"
+    },
+    {
+      "predicate": {
+        "damage": 0.03
+      },
+      "model": "nexora:item/spear_infernal"
+    },
+    {
+      "predicate": {
+        "damage": 0.04
+      },
+      "model": "nexora:item/spear_natural"
+    },
+    {
+      "predicate": {
+        "damage": 0.05
+      },
+      "model": "nexora:item/spear_trueno"
+    },
+    {
+      "predicate": {
+        "damage": 0.06
+      },
+      "model": "nexora:item/spear_vacio"
+    },
+    {
+      "predicate": {
+        "damage": 0.07
+      },
+      "model": "nexora:item/spear_marina"
+    },
+    {
+      "predicate": {
+        "damage": 0.08
+      },
+      "model": "nexora:item/spear_ancestral"
+    },
+    {
+      "predicate": {
+        "damage": 0.1
+      },
+      "model": "nexora:item/arsenal_emberfang"
+    },
+    {
+      "predicate": {
+        "damage": 0.11
+      },
+      "model": "nexora:item/arsenal_pyra"
+    },
+    {
+      "predicate": {
+        "damage": 0.12
+      },
+      "model": "nexora:item/arsenal_infernus"
+    },
+    {
+      "predicate": {
+        "damage": 0.13
+      },
+      "model": "nexora:item/arsenal_solaris"
+    },
+    {
+      "predicate": {
+        "damage": 0.14
+      },
+      "model": "nexora:item/arsenal_dawnbreaker"
+    },
+    {
+      "predicate": {
+        "damage": 0.15
+      },
+      "model": "nexora:item/arsenal_frostbite"
+    },
+    {
+      "predicate": {
+        "damage": 0.16
+      },
+      "model": "nexora:item/arsenal_permafrost"
+    },
+    {
+      "predicate": {
+        "damage": 0.17
+      },
+      "model": "nexora:item/arsenal_tidebreak"
+    },
+    {
+      "predicate": {
+        "damage": 0.18
+      },
+      "model": "nexora:item/arsenal_abyssal"
+    },
+    {
+      "predicate": {
+        "damage": 0.19
+      },
+      "model": "nexora:item/arsenal_thundercall"
+    },
+    {
+      "predicate": {
+        "damage": 0.2
+      },
+      "model": "nexora:item/arsenal_stormrend"
+    },
+    {
+      "predicate": {
+        "damage": 0.21
+      },
+      "model": "nexora:item/arsenal_voidedge"
+    },
+    {
+      "predicate": {
+        "damage": 0.22
+      },
+      "model": "nexora:item/arsenal_nightfall"
+    },
+    {
+      "predicate": {
+        "damage": 0.23
+      },
+      "model": "nexora:item/arsenal_soulreaver"
+    },
+    {
+      "predicate": {
+        "damage": 0.24
+      },
+      "model": "nexora:item/arsenal_wraith"
+    },
+    {
+      "predicate": {
+        "damage": 0.25
+      },
+      "model": "nexora:item/arsenal_verdant"
+    },
+    {
+      "predicate": {
+        "damage": 0.26
+      },
+      "model": "nexora:item/arsenal_thornheart"
+    },
+    {
+      "predicate": {
+        "damage": 0.27
+      },
+      "model": "nexora:item/arsenal_dragonfang"
+    },
+    {
+      "predicate": {
+        "damage": 0.28
+      },
+      "model": "nexora:item/arsenal_wyrmkiller"
+    },
+    {
+      "predicate": {
+        "damage": 0.29
+      },
+      "model": "nexora:item/arsenal_starfall"
+    },
+    {
+      "predicate": {
+        "damage": 0.3
+      },
+      "model": "nexora:item/arsenal_astralis"
+    },
+    {
+      "predicate": {
+        "damage": 0.31
+      },
+      "model": "nexora:item/arsenal_runic"
+    },
+    {
+      "predicate": {
+        "damage": 0.32
+      },
+      "model": "nexora:item/arsenal_oblivion"
+    },
+    {
+      "predicate": {
+        "damage": 0.33
+      },
+      "model": "nexora:item/arsenal_crownfall"
+    },
+    {
+      "predicate": {
+        "damage": 0.34
+      },
+      "model": "nexora:item/arsenal_eternity"
+    }
+  ]
+}

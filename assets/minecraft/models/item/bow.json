@@ -1,0 +1,44 @@
+{
+  "parent": "item/bow",
+  "textures": {
+    "layer0": "minecraft:items/bow_standby"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.01
+      },
+      "model": "nexora:item/arsenal_skypiercer"
+    },
+    {
+      "predicate": {
+        "damage": 0.02
+      },
+      "model": "nexora:item/arsenal_moonbow"
+    },
+    {
+      "predicate": {
+        "damage": 0.03
+      },
+      "model": "nexora:item/arsenal_phoenixbow"
+    },
+    {
+      "predicate": {
+        "damage": 0.04
+      },
+      "model": "nexora:item/arsenal_voidlongbow"
+    },
+    {
+      "predicate": {
+        "damage": 0.05
+      },
+      "model": "nexora:item/arsenal_starhunter"
+    },
+    {
+      "predicate": {
+        "damage": 0.06
+      },
+      "model": "nexora:item/astral_bow"
+    }
+  ]
+}

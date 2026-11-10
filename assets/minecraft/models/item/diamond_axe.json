@@ -1,0 +1,68 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "minecraft:items/diamond_axe"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.01
+      },
+      "model": "nexora:item/arsenal_titanbreaker"
+    },
+    {
+      "predicate": {
+        "damage": 0.02
+      },
+      "model": "nexora:item/arsenal_doomcleaver"
+    },
+    {
+      "predicate": {
+        "damage": 0.03
+      },
+      "model": "nexora:item/arsenal_magmarend"
+    },
+    {
+      "predicate": {
+        "damage": 0.04
+      },
+      "model": "nexora:item/arsenal_glacieraxe"
+    },
+    {
+      "predicate": {
+        "damage": 0.05
+      },
+      "model": "nexora:item/arsenal_skyrend"
+    },
+    {
+      "predicate": {
+        "damage": 0.06
+      },
+      "model": "nexora:item/arsenal_earthshaker"
+    },
+    {
+      "predicate": {
+        "damage": 0.07
+      },
+      "model": "nexora:item/arsenal_bonecleaver"
+    },
+    {
+      "predicate": {
+        "damage": 0.08
+      },
+      "model": "nexora:item/arsenal_voidchopper"
+    },
+    {
+      "predicate": {
+        "damage": 0.09
+      },
+      "model": "nexora:item/arsenal_sunsplitter"
+    },
+    {
+      "predicate": {
+        "damage": 0.1
+      },
+      "model": "nexora:item/arsenal_beastfell"
+    }
+  ]
+}

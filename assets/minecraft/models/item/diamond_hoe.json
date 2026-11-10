@@ -1,0 +1,86 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "minecraft:items/diamond_hoe"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "damage": 0.01
+      },
+      "model": "nexora:item/fragment_divino"
+    },
+    {
+      "predicate": {
+        "damage": 0.02
+      },
+      "model": "nexora:item/fragment_infernal"
+    },
+    {
+      "predicate": {
+        "damage": 0.03
+      },
+      "model": "nexora:item/fragment_glacial"
+    },
+    {
+      "predicate": {
+        "damage": 0.1
+      },
+      "model": "nexora:item/arsenal_arcanefocus"
+    },
+    {
+      "predicate": {
+        "damage": 0.11
+      },
+      "model": "nexora:item/arsenal_stormstaff"
+    },
+    {
+      "predicate": {
+        "damage": 0.12
+      },
+      "model": "nexora:item/arsenal_frostwand"
+    },
+    {
+      "predicate": {
+        "damage": 0.13
+      },
+      "model": "nexora:item/arsenal_pyrestaff"
+    },
+    {
+      "predicate": {
+        "damage": 0.14
+      },
+      "model": "nexora:item/arsenal_voidcaller"
+    },
+    {
+      "predicate": {
+        "damage": 0.15
+      },
+      "model": "nexora:item/arsenal_lifebloom"
+    },
+    {
+      "predicate": {
+        "damage": 0.16
+      },
+      "model": "nexora:item/arsenal_soulweaver"
+    },
+    {
+      "predicate": {
+        "damage": 0.17
+      },
+      "model": "nexora:item/arsenal_tidecaller"
+    },
+    {
+      "predicate": {
+        "damage": 0.18
+      },
+      "model": "nexora:item/arsenal_starrod"
+    },
+    {
+      "predicate": {
+        "damage": 0.19
+      },
+      "model": "nexora:item/arsenal_runicstaff"
+    }
+  ]
+}
