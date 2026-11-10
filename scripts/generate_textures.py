@@ -1,0 +1,79 @@
+from PIL import Image, ImageDraw
+from pathlib import Path
+
+OUT = Path("assets/nexora/textures")
+OUT.mkdir(parents=True, exist_ok=True)
+SPEARS = {
+ "divina": ((255,205,75,255),(255,246,190,255),(110,70,180,255),(255,255,235,255)),
+ "glacial": ((80,210,255,255),(220,250,255,255),(35,105,190,255),(180,245,255,255)),
+ "infernal": ((225,65,35,255),(255,190,65,255),(105,25,35,255),(255,235,145,255)),
+ "natural": ((75,190,90,255),(195,235,125,255),(80,95,45,255),(240,225,150,255)),
+ "trueno": ((245,220,65,255),(255,255,190,255),(65,85,185,255),(180,220,255,255)),
+ "vacio": ((135,70,210,255),(225,175,255,255),(35,20,65,255),(245,220,255,255)),
+ "marina": ((35,175,190,255),(150,245,235,255),(20,65,115,255),(210,255,250,255)),
+ "ancestral": ((165,115,65,255),(235,205,145,255),(75,45,35,255),(255,235,190,255)),
+}
+def line(d, pts, fill, width=4):
+    d.line(pts, fill=fill, width=width)
+for name, (main, light, dark, glow) in SPEARS.items():
+    im=Image.new("RGBA",(64,64),(0,0,0,0)); d=ImageDraw.Draw(im)
+    # diagonal haft, dark outline and bright core
+    line(d,[(10,56),(49,17)],dark,8); line(d,[(10,55),(48,17)],main,4)
+    line(d,[(13,53),(46,20)],light,1)
+    # crossguard
+    line(d,[(35,22),(51,36)],dark,7); line(d,[(36,22),(51,35)],main,3)
+    # spearhead silhouette, distinct stylized leaf/diamond
+    d.polygon([(43,19),(50,2),(55,14),(51,23),(47,26)],fill=dark)
+    d.polygon([(46,17),(51,5),(53,15),(49,22)],fill=main)
+    d.polygon([(49,14),(51,7),(52,14)],fill=light)
+    # rune/elemental accent and pommel
+    d.rectangle((7,52,14,59),fill=dark); d.rectangle((9,53,12,57),fill=glow)
+    d.point((42,27),fill=glow); d.point((39,30),fill=light)
+    if name=="infernal":
+        d.polygon([(52,3),(57,0),(55,8)],fill=glow)
+        d.point((45,24),fill=(255,80,20,255))
+    elif name=="glacial":
+        d.point((55,18),fill=glow); d.point((43,12),fill=glow)
+    elif name=="trueno":
+        d.line([(54,5),(59,10),(55,11),(60,16)],fill=glow,width=2)
+    elif name=="natural":
+        d.point((33,32),fill=(130,225,85,255)); d.point((29,36),fill=glow)
+    elif name=="vacio":
+        d.point((55,7),fill=(40,10,75,255)); d.point((48,12),fill=glow)
+    elif name=="marina":
+        d.point((55,18),fill=glow); d.point((34,34),fill=(80,220,235,255))
+    elif name=="ancestral":
+        d.rectangle((36,28,38,30),fill=glow); d.point((54,13),fill=light)
+    else:
+        d.point((54,10),fill=glow); d.point((38,28),fill=light)
+    im.save(OUT/"items"/(name+".png"))
+# Astral bow: recognizable curved bow with luminous string.
+im=Image.new("RGBA",(64,64),(0,0,0,0)); d=ImageDraw.Draw(im)
+d.arc((8,3,56,61),250,110,fill=(80,35,145,255),width=8)
+d.arc((11,6,53,58),250,110,fill=(210,170,255,255),width=3)
+line(d,[(18,12),(46,52)],(245,235,255,255),1)
+for p in [(19,13),(24,21),(29,29),(34,37),(40,45),(46,52)]: d.rectangle((p[0]-1,p[1]-1,p[0]+1,p[1]+1),fill=(125,225,255,255))
+im.save(OUT/"items"/"astral.png")
+# Four visibly distinct chestplate inventory icons.
+ARMORS={
+ "divina":((245,190,55,255),(255,245,175,255),(105,65,155,255)),
+ "infernal":((190,45,30,255),(255,150,45,255),(65,20,30,255)),
+ "glacial":((70,175,230,255),(205,245,255,255),(35,75,135,255)),
+ "vacio":((105,55,170,255),(210,155,255,255),(30,15,55,255)),
+}
+for name,(a,b,c) in ARMORS.items():
+    im=Image.new("RGBA",(64,64),(0,0,0,0)); d=ImageDraw.Draw(im)
+    d.polygon([(16,10),(25,14),(39,14),(48,10),(59,20),(51,34),(46,29),(46,56),(18,56),(18,29),(13,34),(5,20)],fill=c)
+    d.polygon([(17,13),(25,17),(39,17),(47,13),(54,21),(47,29),(42,24),(42,51),(22,51),(22,24),(17,29),(10,21)],fill=a)
+    d.polygon([(27,18),(37,18),(40,30),(32,39),(24,30)],fill=b)
+    d.rectangle((29,42,35,48),fill=b)
+    if name=="divina":
+        d.polygon([(32,5),(35,14),(32,20),(29,14)],fill=(255,255,225,255))
+    elif name=="infernal":
+        d.polygon([(22,8),(27,14),(23,20),(18,14)],fill=(255,95,25,255))
+    elif name=="glacial":
+        d.polygon([(32,5),(36,13),(32,19),(28,13)],fill=(225,255,255,255))
+    else:
+        d.ellipse((27,21,37,31),outline=(235,190,255,255),width=2)
+    im.save(OUT/"armor"/(name+"_chestplate.png"))
+print("Generated 13 distinct NEXORA item textures.")
