@@ -44,7 +44,21 @@ jobs:
           assert len(hashes) == 50, "Arsenal contains duplicate texture files"
           for path in Path("assets").rglob("*.json"):
               json.loads(path.read_text(encoding="utf-8"))
-          print("Validated 50 unique arsenal textures, 50 model definitions and all JSON models")
+          # Check every NEXORA model reference and every NEXORA texture reference.
+          for base_model in Path("assets/minecraft/models/item").glob("*.json"):
+              model_data = json.loads(base_model.read_text(encoding="utf-8"))
+              for override in model_data.get("overrides", []):
+                  model_ref = override.get("model", "")
+                  if model_ref.startswith("nexora:"):
+                      model_path = Path("assets/nexora/models") / (model_ref.split(":", 1)[1] + ".json")
+                      assert model_path.exists(), f"Missing model referenced by {base_model}: {model_path}"
+          for model_path in Path("assets/nexora/models/item").glob("*.json"):
+              model_data = json.loads(model_path.read_text(encoding="utf-8"))
+              for texture_ref in model_data.get("textures", {}).values():
+                  if texture_ref.startswith("nexora:"):
+                      texture_path = Path("assets/nexora/textures") / (texture_ref.split(":", 1)[1] + ".png")
+                      assert texture_path.exists(), f"Missing texture referenced by {model_path}: {texture_path}"
+          print("Validated 50 unique arsenal textures, 50 model definitions, all JSON and model/texture references")
           PY
       - name: Save generated assets
         run: |
