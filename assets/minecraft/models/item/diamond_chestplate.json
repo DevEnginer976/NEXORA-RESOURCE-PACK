@@ -6,24 +6,28 @@
   "overrides": [
     {
       "predicate": {
+        "damaged": 1,
         "damage": 0.01
       },
       "model": "nexora:item/armor_divina"
     },
     {
       "predicate": {
+        "damaged": 1,
         "damage": 0.02
       },
       "model": "nexora:item/armor_infernal"
     },
     {
       "predicate": {
+        "damaged": 1,
         "damage": 0.03
       },
       "model": "nexora:item/armor_glacial"
     },
     {
       "predicate": {
+        "damaged": 1,
         "damage": 0.04
       },
       "model": "nexora:item/armor_vacio"
