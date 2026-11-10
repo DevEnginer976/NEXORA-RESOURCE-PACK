@@ -108,3 +108,36 @@ for name,(a,b,c) in ARMORS.items():
             d.polygon([(15,18),(29,25),(35,25),(49,18),(51,34),(39,38),(35,53),(29,53),(25,38),(13,34)],fill=a)
             d.rectangle((27,28,37,37),fill=b)
         im.save(OUT/"armor"/(name+"_"+piece+".png"))
+
+
+# Compatibility fallback for clients that load vanilla PNG overrides but do not
+# implement 1.12 item-model predicate overrides (common in browser clients).
+# These make the pack visibly change vanilla items even without custom-model support.
+VANILLA_ITEMS = Path("assets/minecraft/textures/items")
+VANILLA_ITEMS.mkdir(parents=True, exist_ok=True)
+# Base diamond sword: dark steel blade with a gold/purple NEXORA core.
+im = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+line(d, [(13, 53), (49, 9)], (35, 25, 55, 255), 10)
+line(d, [(15, 51), (48, 10)], (120, 75, 185, 255), 6)
+line(d, [(17, 48), (46, 13)], (245, 220, 255, 255), 2)
+d.polygon([(45, 7), (55, 2), (51, 14), (47, 17)], fill=(255, 215, 95, 255))
+line(d, [(8, 47), (22, 59)], (65, 35, 90, 255), 7)
+line(d, [(10, 47), (21, 57)], (235, 185, 75, 255), 3)
+d.rectangle((5, 53, 14, 61), fill=(45, 25, 65, 255))
+d.rectangle((7, 54, 11, 58), fill=(255, 215, 95, 255))
+im.save(VANILLA_ITEMS / "diamond_sword.png")
+# Base diamond hoe: visible crystalline NEXORA shard.
+im = Image.new("RGBA", (64, 64), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+line(d, [(15, 54), (48, 10)], (40, 25, 65, 255), 7)
+line(d, [(17, 52), (47, 11)], (160, 105, 220, 255), 3)
+d.polygon([(36, 8), (51, 3), (57, 17), (43, 25), (33, 19)], fill=(75, 40, 120, 255), outline=(245, 220, 255, 255))
+d.polygon([(43, 8), (51, 6), (53, 15), (43, 20)], fill=(210, 170, 255, 255))
+im.save(VANILLA_ITEMS / "diamond_hoe.png")
+# Vanilla armor inventory icons use the NEXORA Divine palette as a visible fallback.
+# Per-set icons still depend on the custom model predicates above.
+for piece in ("helmet", "chestplate", "leggings", "boots"):
+    src = OUT / "armor" / ("divina_" + piece + ".png")
+    if src.exists():
+        im = Image.open(src).convert("RGBA")
+        im.save(VANILLA_ITEMS / ("diamond_" + piece + ".png"))
+print("Generated vanilla-path compatibility fallback textures.")
