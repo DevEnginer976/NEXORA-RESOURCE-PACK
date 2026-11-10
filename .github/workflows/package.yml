@@ -11,18 +11,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build ZIP
+      - name: Build installable resource pack ZIP
         run: |
           mkdir -p dist
-          cd assets
-          zip -r ../dist/NEXORA-HYPERMC-RPG-1.12.2.zip .
-          cd ..
-          cp pack.mcmeta dist/pack.mcmeta
-          cp pack.png dist/pack.png 2>/dev/null || true
+          zip -r dist/NEXORA-HYPERMC-RPG-1.12.2.zip assets pack.mcmeta
+          unzip -l dist/NEXORA-HYPERMC-RPG-1.12.2.zip
       - name: Upload resource pack
         uses: actions/upload-artifact@v4
         with:
           name: NEXORA-HYPERMC-RPG-1.12.2
-          path: dist/
+          path: dist/NEXORA-HYPERMC-RPG-1.12.2.zip
           if-no-files-found: error
           retention-days: 30
