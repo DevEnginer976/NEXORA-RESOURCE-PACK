@@ -77,3 +77,34 @@ for name,(a,b,c) in ARMORS.items():
         d.ellipse((27,21,37,31),outline=(235,190,255,255),width=2)
     im.save(OUT/"armor"/(name+"_chestplate.png"))
 print("Generated 13 distinct NEXORA item textures.")
+
+# Three boss fragments use diamond-hoe damage predicates supported by 1.12.2.
+FRAGMENTS = {
+ "DIVINO": ((250,205,75,255),(255,248,190,255),(110,65,160,255)),
+ "INFERNAL": ((210,55,30,255),(255,175,55,255),(75,18,25,255)),
+ "GLACIAL": ((70,190,245,255),(225,250,255,255),(30,75,145,255)),
+}
+for name,(a,b,c) in FRAGMENTS.items():
+    im=Image.new("RGBA",(64,64),(0,0,0,0)); d=ImageDraw.Draw(im)
+    d.ellipse((8,8,56,56),fill=c,outline=b,width=3)
+    d.polygon([(32,5),(43,23),(39,32),(50,43),(32,58),(14,43),(25,32),(21,23)],fill=a,outline=b)
+    d.polygon([(32,12),(37,27),(32,35),(27,27)],fill=b)
+    d.rectangle((29,36,35,47),fill=c)
+    im.save(OUT/"items"/("fragment_"+name.lower()+".png"))
+# Individual inventory icons for every armor piece in all four sets.
+for name,(a,b,c) in ARMORS.items():
+    for piece in ("helmet","leggings","boots"):
+        im=Image.new("RGBA",(64,64),(0,0,0,0)); d=ImageDraw.Draw(im)
+        if piece=="helmet":
+            d.polygon([(13,17),(22,7),(42,7),(51,17),(55,43),(9,43)],fill=c,outline=b)
+            d.polygon([(18,18),(25,12),(39,12),(46,18),(49,37),(15,37)],fill=a)
+            d.rectangle((23,24,41,30),fill=b)
+        elif piece=="leggings":
+            d.polygon([(12,7),(52,7),(48,57),(35,57),(32,32),(29,57),(16,57)],fill=c,outline=b)
+            d.polygon([(17,12),(47,12),(43,52),(37,52),(32,28),(27,52),(21,52)],fill=a)
+            d.rectangle((28,15,36,26),fill=b)
+        else:
+            d.polygon([(10,13),(30,20),(34,20),(54,13),(58,38),(43,42),(39,58),(25,58),(21,42),(6,38)],fill=c,outline=b)
+            d.polygon([(15,18),(29,25),(35,25),(49,18),(51,34),(39,38),(35,53),(29,53),(25,38),(13,34)],fill=a)
+            d.rectangle((27,28,37,37),fill=b)
+        im.save(OUT/"armor"/(name+"_"+piece+".png"))
