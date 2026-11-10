@@ -296,3 +296,13 @@ astral_model = {"parent":"item/bow","textures":{"layer0":"nexora:items/astral"}}
 
 assert len(ARSENAL) == 50, "The NEXORA arsenal must contain exactly 50 weapons"
 print("Generated 50 unique arsenal textures and 9 damage-predicate item model files.")
+
+
+# Dedicated model files for the eight legacy spears and three boss fragments.
+for name in ("divina","glacial","infernal","natural","trueno","vacio","marina","ancestral"):
+    model = {"parent":"item/handheld","textures":{"layer0":"nexora:items/"+name}}
+    (models_dir/("spear_"+name+".json")).write_text(json.dumps(model,indent=2)+"\n",encoding="utf-8")
+for name in ("divino","infernal","glacial"):
+    model = {"parent":"item/handheld","textures":{"layer0":"nexora:items/fragment_"+name}}
+    (models_dir/("fragment_"+name+".json")).write_text(json.dumps(model,indent=2)+"\n",encoding="utf-8")
+print("Generated legacy spear and fragment model definitions.")
