@@ -143,3 +143,156 @@ for piece in ("helmet", "chestplate", "leggings", "boots"):
         im = Image.open(src).convert("RGBA")
         im.save(VANILLA_ITEMS / ("diamond_" + piece + ".png"))
 print("Generated vanilla-path compatibility fallback textures.")
+
+
+# ---------------------------------------------------------------------------
+# NEXORA 50-weapon expansion: unique pixel-art icons + 1.12.2 damage models.
+# The damage predicate is the supported pre-1.14 model-selection mechanism.
+# ---------------------------------------------------------------------------
+import json
+
+ARSENAL = [
+("EMBERFANG","SWORD","FUEGO"),("PYRA","SWORD","FUEGO"),("INFERNUS","SWORD","FUEGO"),
+("SOLARIS","SWORD","LUZ"),("DAWNBREAKER","SWORD","LUZ"),("FROSTBITE","SWORD","HIELO"),
+("PERMAFROST","SWORD","HIELO"),("TIDEBREAK","SWORD","AGUA"),("ABYSSAL","SWORD","AGUA"),
+("THUNDERCALL","SWORD","RAYO"),("STORMREND","SWORD","RAYO"),("VOIDEDGE","SWORD","VACIO"),
+("NIGHTFALL","SWORD","VACIO"),("SOULREAVER","SWORD","ALMA"),("WRAITH","SWORD","ALMA"),
+("VERDANT","SWORD","NATURALEZA"),("THORNHEART","SWORD","NATURALEZA"),("DRAGONFANG","SWORD","DRAGON"),
+("WYRMKILLER","SWORD","DRAGON"),("STARFALL","SWORD","ARCANO"),("ASTRALIS","SWORD","ARCANO"),
+("RUNIC","SWORD","ARCANO"),("OBLIVION","SWORD","VACIO"),("CROWNFALL","SWORD","SOMBRA"),
+("ETERNITY","SWORD","LUZ"),
+("TITANBREAKER","AXE","TIERRA"),("DOOMCLEAVER","AXE","SOMBRA"),("MAGMAREND","AXE","FUEGO"),
+("GLACIERAXE","AXE","HIELO"),("SKYREND","AXE","RAYO"),("EARTHSHAKER","AXE","TIERRA"),
+("BONECLEAVER","AXE","ALMA"),("VOIDCHOPPER","AXE","VACIO"),("SUNSPLITTER","AXE","LUZ"),
+("BEASTFELL","AXE","NATURALEZA"),
+("ARCANEFOCUS","HOE","ARCANO"),("STORMSTAFF","HOE","RAYO"),("FROSTWAND","HOE","HIELO"),
+("PYRESTAFF","HOE","FUEGO"),("VOIDCALLER","HOE","VACIO"),("LIFEBLOOM","HOE","NATURALEZA"),
+("SOULWEAVER","HOE","ALMA"),("TIDECALLER","HOE","AGUA"),("STARROD","HOE","LUZ"),
+("RUNICSTAFF","HOE","ARCANO"),
+("SKYPIERCER","BOW","RAYO"),("MOONBOW","BOW","ARCANO"),("PHOENIXBOW","BOW","FUEGO"),
+("VOIDLONGBOW","BOW","VACIO"),("STARHUNTER","BOW","LUZ")
+]
+PALETTES = {
+ "FUEGO":((190,38,28,255),(255,174,62,255),(65,18,24,255),(255,225,145,255)),
+ "LUZ":((220,175,65,255),(255,246,180,255),(100,65,125,255),(255,255,235,255)),
+ "HIELO":((55,155,220,255),(210,245,255,255),(25,55,110,255),(235,255,255,255)),
+ "AGUA":((25,145,165,255),(140,235,230,255),(15,50,95,255),(205,255,250,255)),
+ "RAYO":((70,100,205,255),(255,235,95,255),(25,30,85,255),(230,250,255,255)),
+ "VACIO":((105,50,165,255),(205,150,255,255),(25,12,50,255),(245,220,255,255)),
+ "ALMA":((145,85,175,255),(235,195,255,255),(45,25,70,255),(255,235,255,255)),
+ "NATURALEZA":((55,145,75,255),(180,225,105,255),(25,65,40,255),(230,255,175,255)),
+ "DRAGON":((155,45,35,255),(245,155,65,255),(55,20,25,255),(255,225,155,255)),
+ "ARCANO":((100,75,185,255),(205,175,255,255),(35,25,80,255),(245,230,255,255)),
+ "SOMBRA":((65,55,85,255),(175,125,195,255),(15,12,25,255),(225,195,245,255)),
+ "TIERRA":((125,90,50,255),(220,185,105,255),(50,35,25,255),(245,225,165,255))
+}
+ARSENAL_DIR = OUT / "items" / "arsenal"
+ARSENAL_DIR.mkdir(parents=True, exist_ok=True)
+models_dir = Path("assets/nexora/models/item")
+models_dir.mkdir(parents=True, exist_ok=True)
+material_counts = {"SWORD":0,"AXE":0,"HOE":0,"BOW":0}
+model_overrides = {"SWORD":[],"AXE":[],"HOE":[],"BOW":[]}
+for idx,(weapon_id,kind,element) in enumerate(ARSENAL):
+    material_counts[kind] += 1
+    local_index = material_counts[kind]
+    if kind == "SWORD":
+        damage = 0.10 + (local_index-1)*0.01
+    elif kind == "AXE":
+        damage = 0.01 + (local_index-1)*0.01
+    elif kind == "HOE":
+        damage = 0.10 + (local_index-1)*0.01
+    else:
+        damage = 0.01 + (local_index-1)*0.01
+    main,light,dark,glow = PALETTES[element]
+    im = Image.new("RGBA",(64,64),(0,0,0,0)); d = ImageDraw.Draw(im)
+    # The same elemental palette is rendered through four distinct silhouettes.
+    if kind == "SWORD":
+        d.polygon([(8,54),(42,13),(54,3),(49,20),(15,59)],fill=dark,outline=glow)
+        d.polygon([(13,51),(43,14),(50,8),(46,20),(17,55)],fill=main)
+        d.line([(18,47),(45,16)],fill=light,width=2)
+        d.polygon([(7,45),(20,57),(16,62),(3,50)],fill=dark)
+        d.line([(5,47),(18,59)],fill=glow,width=2)
+        d.rectangle((8,55,14,61),fill=light)
+    elif kind == "AXE":
+        d.line([(12,58),(43,13)],fill=dark,width=9); d.line([(14,56),(43,14)],fill=main,width=4)
+        d.polygon([(29,22),(35,7),(54,4),(61,18),(52,35),(39,31)],fill=dark,outline=glow)
+        d.polygon([(34,20),(39,10),(53,9),(56,18),(49,29),(40,27)],fill=main)
+        d.line([(39,13),(52,12),(55,18)],fill=light,width=3)
+        d.rectangle((9,53,18,61),fill=glow)
+    elif kind == "HOE":
+        d.line([(13,59),(44,12)],fill=dark,width=9); d.line([(15,57),(44,13)],fill=main,width=4)
+        d.polygon([(36,9),(51,5),(59,14),(54,22),(40,20)],fill=dark,outline=glow)
+        d.polygon([(40,10),(51,8),(55,14),(51,18),(41,17)],fill=light)
+        d.line([(37,18),(49,26)],fill=main,width=5)
+        d.ellipse((8,51,19,62),fill=dark,outline=glow)
+    else:
+        d.arc((7,3,57,61),250,110,fill=dark,width=9)
+        d.arc((10,6,54,58),250,110,fill=main,width=5)
+        d.line([(18,12),(46,52)],fill=light,width=2)
+        d.polygon([(42,45),(53,53),(46,57)],fill=glow)
+        d.polygon([(12,7),(20,11),(16,18)],fill=light)
+    # Unique rune geometry per ID: no two generated icons are byte-identical.
+    rune_x = 23 + (idx % 5) * 3
+    rune_y = 25 + (idx % 4) * 3
+    if idx % 4 == 0:
+        d.polygon([(rune_x,rune_y-7),(rune_x+5,rune_y),(rune_x,rune_y+7),(rune_x-5,rune_y)],fill=glow)
+    elif idx % 4 == 1:
+        d.line([(rune_x-5,rune_y+5),(rune_x,rune_y-6),(rune_x+5,rune_y+5)],fill=glow,width=3)
+    elif idx % 4 == 2:
+        d.ellipse((rune_x-5,rune_y-5,rune_x+5,rune_y+5),outline=light,width=2)
+    else:
+        d.line([(rune_x-5,rune_y-4),(rune_x+5,rune_y+4)],fill=glow,width=2)
+        d.line([(rune_x+4,rune_y-5),(rune_x-4,rune_y+5)],fill=light,width=2)
+    d.point((4+(idx*7)%56,4+(idx*11)%56),fill=glow)
+    im.save(ARSENAL_DIR/(weapon_id.lower()+".png"))
+    model_name = "arsenal_" + weapon_id.lower()
+    model = {"parent":"item/handheld" if kind != "BOW" else "item/bow",
+             "textures":{"layer0":"nexora:items/arsenal/"+weapon_id.lower()}}
+    (models_dir/(model_name+".json")).write_text(json.dumps(model,indent=2)+"\n",encoding="utf-8")
+    model_overrides[kind].append({"predicate":{"damage":round(damage,4)},"model":"nexora:item/"+model_name})
+
+# 1.12.2 item-model overrides: diamond tools use damage fractions, not CustomModelData.
+def write_base_model(filename, texture, parent, overrides):
+    model = {"parent":parent,"textures":{"layer0":texture},"overrides":overrides}
+    path = Path("assets/minecraft/models/item")/filename
+    path.parent.mkdir(parents=True,exist_ok=True)
+    path.write_text(json.dumps(model,indent=2)+"\n",encoding="utf-8")
+
+sword_overrides = []
+for i,name in enumerate(["divina","glacial","infernal","natural","trueno","vacio","marina","ancestral"]):
+    sword_overrides.append({"predicate":{"damage":round(0.01+i*0.01,4)},"model":"nexora:item/spear_"+name})
+sword_overrides.extend(model_overrides["SWORD"])
+write_base_model("diamond_sword.json","minecraft:items/diamond_sword","item/handheld",sword_overrides)
+
+axe_overrides = model_overrides["AXE"]
+write_base_model("diamond_axe.json","minecraft:items/diamond_axe","item/handheld",axe_overrides)
+
+hoe_overrides = []
+for i,name in enumerate(["divino","infernal","glacial"]):
+    hoe_overrides.append({"predicate":{"damage":round(0.01+i*0.01,4)},"model":"nexora:item/fragment_"+name})
+hoe_overrides.extend(model_overrides["HOE"])
+write_base_model("diamond_hoe.json","minecraft:items/diamond_hoe","item/handheld",hoe_overrides)
+
+bow_overrides = [{"predicate":{"damage":round(0.01+i*0.01,4)},"model":"nexora:item/arsenal_"+name.lower()}
+                 for i,(name,kind,element) in enumerate([x for x in ARSENAL if x[1]=="BOW"])]
+bow_overrides.append({"predicate":{"damage":0.06},"model":"nexora:item/astral_bow"})
+write_base_model("bow.json","minecraft:items/bow_standby","item/bow",bow_overrides)
+
+# The four armor inventory icons select the correct set by the same damage fraction
+# written by NexoraWeapons. Worn armor layers remain vanilla on unmodified 1.12 clients.
+for piece in ("helmet","chestplate","leggings","boots"):
+    overrides = []
+    for i,name in enumerate(("divina","infernal","glacial","vacio")):
+        model_name = "armor_"+name+"_"+piece
+        model = {"parent":"item/generated","textures":{"layer0":"nexora:armor/"+name+"_"+piece}}
+        (models_dir/(model_name+".json")).write_text(json.dumps(model,indent=2)+"\n",encoding="utf-8")
+        overrides.append({"predicate":{"damage":round(0.01+i*0.01,4)},"model":"nexora:item/"+model_name})
+    vanilla_texture = "minecraft:items/diamond_"+piece
+    write_base_model("diamond_"+piece+".json",vanilla_texture,"item/generated",overrides)
+
+# Model for the original Astral bow, used by the BOW_ASTRAL item ID.
+astral_model = {"parent":"item/bow","textures":{"layer0":"nexora:items/astral"}}
+(models_dir/"astral_bow.json").write_text(json.dumps(astral_model,indent=2)+"\n",encoding="utf-8")
+
+assert len(ARSENAL) == 50, "The NEXORA arsenal must contain exactly 50 weapons"
+print("Generated 50 unique arsenal textures and 9 damage-predicate item model files.")
