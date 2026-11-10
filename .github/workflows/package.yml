@@ -1,43 +1,60 @@
-name: Package NEXORA Resource Pack
+name: Build NEXORA 1.12.2 Resource Pack
 
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "assets/**"
+      - "dist/**"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  package:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: true
-      - name: Generate original pixel-art textures
+      - uses: actions/checkout@v4
+      - name: Install image generator
+        run: python -m pip install --disable-pip-version-check pillow
+      - name: Generate all pack assets
         run: |
-          python -m pip install --quiet pillow
           python scripts/generate_textures.py
           python scripts/generate_ui.py
-      - name: Save generated textures to repository
+      - name: Validate generated PNG assets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          files = list(Path("assets").rglob("*.png"))
+          assert len(files) >= 40, f"Expected at least 40 PNG files, got {len(files)}"
+          for path in files:
+              with Image.open(path) as im:
+                  im.verify()
+          print(f"Validated {len(files)} PNG files")
+          PY
+      - name: Save generated assets
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets
           if ! git diff --cached --quiet; then
-            git commit -m "Generate distinct NEXORA pixel-art item textures"
+            git commit -m "Regenerate optimized NEXORA resource pack assets"
             git push
           fi
-      - name: Build installable resource pack ZIP
+      - name: Build installable ZIP
         run: |
           mkdir -p dist
-          zip -r dist/NEXORA-HYPERMC-RPG-1.12.2.zip assets pack.mcmeta
-          unzip -t dist/NEXORA-HYPERMC-RPG-1.12.2.zip
-          unzip -l dist/NEXORA-HYPERMC-RPG-1.12.2.zip
-      - name: Upload resource pack
-        uses: actions/upload-artifact@v4
+          cd assets
+          zip -qr ../dist/NEXORA-HYPERMC-RPG-1.12.2.zip .
+          cd ..
+          cp pack.mcmeta dist/
+          cd dist
+          zip -q NEXORA-HYPERMC-RPG-1.12.2.zip pack.mcmeta
+          unzip -t NEXORA-HYPERMC-RPG-1.12.2.zip
+          unzip -l NEXORA-HYPERMC-RPG-1.12.2.zip
+      - uses: actions/upload-artifact@v4
         with:
           name: NEXORA-HYPERMC-RPG-1.12.2
           path: dist/NEXORA-HYPERMC-RPG-1.12.2.zip

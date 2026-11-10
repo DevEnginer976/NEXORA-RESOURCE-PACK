@@ -1,17 +1,17 @@
-# Mapeo de objetos — NEXORA RPG
+# NEXORA item mapping — 1.12.2
 
-Los modelos se seleccionan usando el predicado `damage` de 1.12.2. El plugin debe aplicar el daño relativo indicado al material base elegido y mantener los objetos sin desgaste normal.
+| Item base | Damage fraction | Resource model |
+|---|---:|---|
+| diamond_sword | 0.01 | spear_divina |
+| diamond_sword | 0.02 | spear_glacial |
+| diamond_sword | 0.03 | spear_infernal |
+| diamond_sword | 0.04 | spear_natural |
+| diamond_sword | 0.05 | spear_trueno |
+| diamond_sword | 0.06 | spear_vacio |
+| diamond_sword | 0.07 | spear_marina |
+| diamond_sword | 0.08 | spear_ancestral |
+| diamond_hoe | 0.01 | fragment_divino |
+| diamond_hoe | 0.02 | fragment_infernal |
+| diamond_hoe | 0.03 | fragment_glacial |
 
-| Objeto | Textura/modelo | Predicado sugerido |
-|---|---|---:|
-| Lanza Divina | spear_divina | 0.01 |
-| Lanza Glacial | spear_glacial | 0.02 |
-| Lanza Infernal | spear_infernal | 0.03 |
-| Lanza Natural | spear_natural | 0.04 |
-| Lanza Trueno | spear_trueno | 0.05 |
-| Lanza del Vacío | spear_vacio | 0.06 |
-| Lanza Marina | spear_marina | 0.07 |
-| Lanza Ancestral | spear_ancestral | 0.08 |
-| Arco Astral | bow_astral | 0.09 |
-
-Los valores son una propuesta de integración y deben mantenerse sincronizados con el plugin. No cambiar el material base ni estos valores sin actualizar ambos proyectos.
+The plugin must assign the corresponding durability damage fraction. Verify predicate selection in the exact Modern Client build.

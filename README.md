@@ -1,30 +1,21 @@
-# NEXORA STUDIOS — HYPERMC RPG RESOURCE PACK
+# NEXORA STUDIOS — HYPERMC RPG Resource Pack
 
-Paquete de recursos independiente para **Minecraft Java 1.12.2**, con Modern Client como cliente objetivo.
-
-## Identidad visual
-- Estética RPG de fantasía oscura, oro antiguo y acentos mágicos.
-- Ocho lanzas con siluetas y paletas diferenciadas: Divina, Glacial, Infernal, Natural, Trueno, Vacío, Marina y Ancestral.
-- Arco Astral.
-- Próxima fase: cuatro conjuntos de armadura (Divina, Infernal, Glacial y Vacío), materiales, fragmentos, interfaz y menú principal NEXORA STUDIOS.
-
-## Compatibilidad
-- `pack_format: 3` para Minecraft 1.12.2.
-- No utiliza CustomModelData (no existe en 1.12.2).
-- Los modelos de armas se asignarán mediante predicados de daño/durabilidad en modelos JSON y requieren que el plugin NEXORA asigne los valores correspondientes.
-- La compatibilidad exacta de modelos, panorama y pantallas de menú debe probarse dentro de la compilación concreta de Modern Client.
-- Las texturas de icono no garantizan por sí solas una apariencia de armadura distinta al equiparla. Esa parte necesita una estrategia de armadura compatible con el renderizador del cliente.
+Resource pack objetivo: Minecraft Java 1.12.2 / Modern Client (compatibilidad por verificar en cada build).
 
 ## Estructura
-- `assets/nexora/textures/items/`: texturas de armas.
-- `assets/nexora/models/item/`: modelos de objetos.
-- `assets/minecraft/models/item/`: overrides del objeto base.
-- `docs/ITEM-MAPPING.md`: asignación que debe coincidir con el plugin.
+- `assets/minecraft/models/item/`: overrides vanilla para armas, fragmentos y armaduras.
+- `assets/minecraft/textures/items/`: texturas fallback para clientes que no apliquen overrides.
+- `assets/nexora/models/item/`: modelos de los objetos RPG.
+- `assets/nexora/textures/items/`: armas y fragmentos NEXORA.
+- `assets/nexora/textures/armor/`: iconos de armaduras.
+- `assets/minecraft/textures/gui/`: panorama, logo, botones e interfaces.
 
-## Instalación de prueba
-1. Descarga el ZIP del paquete desde GitHub.
-2. En Modern Client abre Resource Packs.
-3. Importa o selecciona el ZIP, según las opciones disponibles en esa compilación.
-4. Actívalo y entra a un mundo de pruebas.
+## Generación reproducible
+Las imágenes se generan desde `scripts/generate_textures.py` y `scripts/generate_ui.py`.
+El flujo crea primero todas las carpetas necesarias, genera PNG RGBA, valida dimensiones y empaqueta el ZIP.
 
-**Estado:** base inicial de desarrollo. No es todavía la versión final completa.
+## Importación
+Descarga el archivo `NEXORA-HYPERMC-RPG-1.12.2.zip) del artefacto de GitHub Actions. Importa ese ZIP directamente en el cliente. No importes el ZIP exterior del artefacto si GitHub descargó un contenedor ZIP.
+
+## Limitaciones conocidas
+Los modelos por predicados de daño dependen de que el cliente implemente el sistema de modelos de Minecraft 1.12.2. Las texturas fallback solo prueban que el cliente lee rutas vanilla; hacen que todos los objetos vanilla de ese tipo compartan esa textura. La apariencia equipada de armadura requiere texturas de capa compatibles y debe probarse por separado.

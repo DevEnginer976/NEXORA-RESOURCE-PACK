@@ -3,6 +3,8 @@ from pathlib import Path
 
 OUT = Path("assets/nexora/textures")
 OUT.mkdir(parents=True, exist_ok=True)
+(OUT / "items").mkdir(parents=True, exist_ok=True)
+(OUT / "armor").mkdir(parents=True, exist_ok=True)
 SPEARS = {
  "divina": ((255,205,75,255),(255,246,190,255),(110,70,180,255),(255,255,235,255)),
  "glacial": ((80,210,255,255),(220,250,255,255),(35,105,190,255),(180,245,255,255)),
