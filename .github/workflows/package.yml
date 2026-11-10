@@ -33,6 +33,18 @@ jobs:
               with Image.open(path) as im:
                   im.verify()
           print(f"Validated {len(files)} PNG files")
+          import json, hashlib
+          arsenal_png = sorted(Path("assets/nexora/textures/items/arsenal").glob("*.png"))
+          arsenal_models = sorted(Path("assets/nexora/models/item").glob("arsenal_*.json"))
+          assert len(arsenal_png) == 50, f"Expected 50 arsenal textures, got {len(arsenal_png)}"
+          assert len(arsenal_models) == 50, f"Expected 50 arsenal models, got {len(arsenal_models)}"
+          hashes = set()
+          for path in arsenal_png:
+              hashes.add(hashlib.sha256(path.read_bytes()).hexdigest())
+          assert len(hashes) == 50, "Arsenal contains duplicate texture files"
+          for path in Path("assets").rglob("*.json"):
+              json.loads(path.read_text(encoding="utf-8"))
+          print("Validated 50 unique arsenal textures, 50 model definitions and all JSON models")
           PY
       - name: Save generated assets
         run: |
